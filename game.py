@@ -14,6 +14,12 @@ def run(word):
   letters_guessed = []
   words_guessed = []
   lives = 6
+  print("Are you ready to play hangman?!")
+  print(visual_hangman(lives))
+  print(word_complete)
+  print("\n")
+
+  
 
 
 
@@ -50,7 +56,7 @@ def run(word):
 
 
 
-  def display_hangman(lives):
+  def visual_hangman(lives):
     stages = [  # final state: head, torso, both arms, and both legs, game is over, player loses.
                 """
                    --------
