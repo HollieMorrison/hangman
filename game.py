@@ -9,16 +9,17 @@ def get_word():
 
 
 def run(word):
-  word_complete = "_" * len(word)
-  guesses = False
-  letters_guessed = []
-  words_guessed = []
-  lives = 6
-  print("Are you ready to play hangman?!")
-  print(visual_hangman(lives))
-  print(word_complete)
-  print("\n")
-while not guesses and lives > 0:
+    word_complete = "_" * len(word)
+    guesses = False
+    letters_guessed = []
+    words_guessed = []
+    lives = 6
+    print("Are you ready to play hangman?!")
+    print(visual_hangman(lives))
+    print(word_complete)
+    print("\n")
+
+    while not guesses and lives > 0:
         guess = input("Please guess a letter or word: ").upper()
         if len(guess) == 1 and guess.isalpha():
             if guess in letters_guessed:
@@ -34,7 +35,7 @@ while not guesses and lives > 0:
                 indices = [i for i, letter in enumerate(word) if letter == guess]
                 for index in indices:
                     word_as_list[index] = guess
-                word_complete = "".join(random_words)
+                word_complete = "".join(word_as_list)
                 if "_" not in word_complete:
                     guesses = True
         elif len(guess) == len(word) and guess.isalpha():
@@ -42,21 +43,32 @@ while not guesses and lives > 0:
                 print("You already guessed the word", guess)
             elif guess != word:
                 print(guess, "is not the word.")
-                tries -= 1
+                lives -= 1
                 words_guessed.append(guess)
             else:
                 guesses = True
                 word_complete = word
         else:
             print("Not a valid guess, please try again.")
-        print(visual_hangman(tries))
+        
+        print(visual_hangman(lives))
         print(word_complete)
         print("\n")
+
     if guesses:
         print("Congratulations, you guessed the word! You win!")
     else:
         print("Sorry, you ran out of tries. The word was " + word + ". Maybe next time!")
 
+def main():
+    word = get_word()
+    run(word)
+    while input("Play Again? (Y/N) ").upper() == "Y":
+        word = get_word()
+        run(word)
+
+if __name__ == "__main__":
+    main()
 
 
 
@@ -75,7 +87,8 @@ while not guesses and lives > 0:
 
 
 
-  def visual_hangman(lives):
+
+def visual_hangman(lives):
     stages = [  # final state: head, torso, both arms, and both legs, game is over, player loses.
                 """
                    --------
@@ -151,10 +164,10 @@ while not guesses and lives > 0:
 
 def main():
     word = get_word()
-    play(word)
+    run(word)
     while input("Play Again? (Y/N) ").upper() == "Y":
         word = get_word()
-        play(word)
+        run(word)
 
 
 if __name__ == "__main__":
